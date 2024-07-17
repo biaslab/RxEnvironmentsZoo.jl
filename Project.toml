@@ -1,0 +1,13 @@
+name = "RxEnvironmentsZoo"
+uuid = "adb3f080-5af9-40cb-b3ca-0db92be4ebef"
+authors = ["Wouter Nuijten <wouternuijten@gmail.com> and contributors"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1.10"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
