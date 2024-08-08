@@ -9,6 +9,7 @@ GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
 RxEnvironments = "5ea003d0-0c30-4e5c-84d5-cc22d8d83890"
 
 [compat]
+GLMakie = "0.10"
 julia = "1.10"
 
 [extras]
