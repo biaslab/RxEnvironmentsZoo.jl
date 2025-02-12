@@ -1,6 +1,5 @@
-using RxEnvironmentsZoo
-using Test
+using RxEnvironmentsZoo, ReTestItems, Aqua
 
-@testset "RxEnvironmentsZoo.jl" begin
-    # Write your tests here.
-end
+Aqua.test_all(RxEnvironmentsZoo; ambiguities=(broken=false,))
+
+runtests(RxEnvironmentsZoo)

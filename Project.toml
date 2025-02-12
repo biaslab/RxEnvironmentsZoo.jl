@@ -1,18 +1,34 @@
 name = "RxEnvironmentsZoo"
 uuid = "adb3f080-5af9-40cb-b3ca-0db92be4ebef"
-authors = ["Wouter Nuijten <wouternuijten@gmail.com> and contributors"]
-version = "1.0.0-DEV"
+authors = ["Wouter Nuijten <wouternuijten@gmail.com>"]
+version = "0.0.1"
 
 [deps]
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
 GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
+HypergeometricFunctions = "34004b35-14d8-5ef3-9330-4cdb6864b03a"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 RxEnvironments = "5ea003d0-0c30-4e5c-84d5-cc22d8d83890"
 
 [compat]
+Aqua = "0.8"
+DifferentialEquations = "7.16"
+Distributions = "0.25"
+ForwardDiff = "0.10"
+GLMakie = "0.11"
+HypergeometricFunctions = "0.3"
+LinearAlgebra = "1.10"
+ReTestItems = "1.16"
+RxEnvironments = "0.2"
+Test = "1.10"
 julia = "1.10"
 
 [extras]
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+ReTestItems = "817f1d60-ba6b-4fd5-9520-3cf149f6a823"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test"]
+test = ["Aqua", "ReTestItems", "Test"]

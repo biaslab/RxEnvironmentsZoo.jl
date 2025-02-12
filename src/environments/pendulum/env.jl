@@ -2,6 +2,8 @@ using DifferentialEquations
 using RxEnvironments
 using GLMakie
 
+export Pendulum, PendulumAgent
+
 mutable struct ObservablePendulumState{T<:Real}
     theta::T
     angular_velocity::T
@@ -25,8 +27,8 @@ mutable struct Pendulum{T,R,D}
 end
 
 Pendulum(g) = begin
-    problem = ODEProblem(__pendulum_dynamics, [0.0, 0.0, 0.0], (0.0, 10.0), g)
-    state = PendulumState(ObservablePendulumState(0.0, 0.0, 0.0), solve(problem), 10.0, 0.0)
+    problem = ODEProblem(__pendulum_dynamics, [-pi / 2, 0.0, 0.0], (0.0, 10.0), g)
+    state = PendulumState(ObservablePendulumState(-pi / 2, 0.0, 0.0), solve(problem), 10.0, 0.0)
     Pendulum(g, problem, state)
 end
 
@@ -75,11 +77,13 @@ RxEnvironments.plot_state(ax, environment::Pendulum) = begin
     ylims!(ax, -1.5, 1.5)
     x, y = cos(theta(environment.state)), sin(theta(environment.state))
     lines!(ax, [0, x], [0, y])
+    scatter!(ax, [x], [y])
 end
 
-p = Pendulum(9.81);
-rxe = RxEnvironment(p, emit_every_ms=60)
-rxa = add!(rxe, PendulumAgent());
-animate_state(rxe)
-send!(rxe, rxa, -1.0)
-send!(rxe, rxa, 0.0)
+
+function create_environment(::Type{Pendulum}; emit_every_ms=20)
+    env = Pendulum(9.81)
+    rxe = RxEnvironment(env; emit_every_ms=emit_every_ms)
+    return rxe
+end
+

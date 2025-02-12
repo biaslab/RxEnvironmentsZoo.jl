@@ -5,6 +5,8 @@ using DifferentialEquations
 using LinearAlgebra
 using RxEnvironments
 
+export MountainCarEnvironment, MountainCarAgent, Throttle
+
 function landscape(x)
     if x < 0
         h = x^2 + x
@@ -178,3 +180,11 @@ function RxEnvironments.update!(environment::MountainCarEnvironment, elapsed_tim
         set_velocity!(agent, new_state[2])
     end
 end
+
+
+function create_environment(::Type{MountainCarEnvironment}; emit_every_ms=20)
+    env = MountainCarEnvironment(landscape)
+    rxe = RxEnvironment(env; emit_every_ms=emit_every_ms)
+    return rxe
+end
+
