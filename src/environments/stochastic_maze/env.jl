@@ -3,7 +3,7 @@ using GLMakie
 using Distributions # For Categorical
 import Distributions: Categorical
 
-export StochasticMaze, StochasticMazeAgent, StochasticMazeAction, create_stochastic_env
+export StochasticMaze, StochasticMazeAgent, StochasticMazeAction
 export move!, sample_observation, send_observation_and_reward
 export add_agent!, plot_maze_state, reset_agent!, reset!
 
@@ -138,17 +138,6 @@ function reset_agent!(agent::StochasticMazeAgent, initial_state::Int)
 end
 
 """
-Create environment and agent entities.
-"""
-function create_stochastic_env(transition_tensor::Array{Float64,3}, observation_matrix::Matrix{Float64}, reward_states::Vector{Tuple{Int,Float64}}; start_state::Int=1)
-    maze = StochasticMaze(transition_tensor, observation_matrix, reward_states)
-    agent = StochasticMazeAgent(start_state)
-    rx_env = create_entity(maze; is_active=true)
-    rx_agent = add!(rx_env, agent)
-    return rx_env, rx_agent
-end
-
-"""
 Add agent to environment.
 """
 function RxEnvironments.add_to_state!(env::StochasticMaze, agent::StochasticMazeAgent)
@@ -279,9 +268,9 @@ function reset!(env::RxEnvironments.RxEntity{StochasticMaze}, start_pos::Int=1)
     reset_agent!(env.decorated.agents[1], start_pos)
 end
 
-function create_environment(::Type{StochasticMaze}, transition_tensor::Array{Float64,3}, observation_matrix::Matrix{Float64}, reward_states::Vector{Tuple{Int,Float64}}; start_state::Int=1)
+function create_environment(::Type{StochasticMaze}, transition_tensor::Array{Float64,3}, observation_matrix::Matrix{Float64}, reward_states::Vector{Tuple{Int,Float64}})
     env = StochasticMaze(transition_tensor, observation_matrix, reward_states)
-    rxe = RxEnvironment(env)
+    rxe = create_entity(env; is_active=true)
     return rxe
 end
 

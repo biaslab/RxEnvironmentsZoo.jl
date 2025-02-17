@@ -53,13 +53,15 @@ struct PendulumAgent
 
 end
 
-RxEnvironments.what_to_send(agent::PendulumAgent, environment::Pendulum) = (cos(theta(environment.state)), sin(theta(environment.state)), angular_velocity(environment.state))
+RxEnvironments.what_to_send(agent::PendulumAgent, environment::Pendulum) = (theta(environment.state), angular_velocity(environment.state))
 
 RxEnvironments.receive!(environment::Pendulum, agent::PendulumAgent, action::Real) = begin
     action = clamp(action, -2.0, 2.0)
     environment.state.observable_state.torque = action
     __recompute_pendulum_dynamics(environment)
 end
+
+RxEnvironments.time_interval(environment::Pendulum) = 0.1
 
 RxEnvironments.update!(environment::Pendulum, elapsed_time::Real) = begin
     environment.state.time_left -= elapsed_time
