@@ -49,8 +49,7 @@
 
         # Test observation format
         obs = RxEnvironments.what_to_send(agent, pendulum)
-        @test length(obs) == 3  # Should return (cos(θ), sin(θ), ω)
-        @test abs(obs[1]^2 + obs[2]^2 - 1.0) < 1e-10  # cos²(θ) + sin²(θ) = 1
+        @test length(obs) == 2  # Should return (θ, ω)
     end
 
     @testset "Trajectory Recomputation" begin

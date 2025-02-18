@@ -129,12 +129,10 @@
         observation_matrix = [1.0 0.0; 0.0 1.0]
         reward_states = [(2, 1.0)]
 
-        rx_env, rx_agent = create_stochastic_env(
-            transition_tensor,
-            observation_matrix,
-            reward_states;
-            start_state=1
-        )
+        rx_env = create_environment(StochasticMaze, transition_tensor, observation_matrix, reward_states)
+        rx_agent = add!(rx_env, StochasticMazeAgent(1))
+        @test rx_env.decorated.agents[1].state == 1
+
 
         # Test initial state
         @test rx_env.decorated.agents[1].state == 1
